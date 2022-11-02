@@ -40,7 +40,9 @@ const Main = ({idEmpre, idUser}) => {
         <Route path='/activoFijo' element={<ActivoFijo />} />
         <Route path='/cuentaContable' element={<CuentaContable />} />
         <Route path='/entidad' element={<Entidad />} />
+        <Route path='/entidad/:idEntity' element={<Entidad />} />
         <Route path='/impuestoAdicional' element={<ImpuestoAdicional />} />
+        <Route path='/impuestoAdicional/:idTaxe' element={<ImpuestoAdicional />} />
         <Route path='/libroComprasVentas' element={<LibroComprasVentasMaestro />} />
         <Route path='/partidasContables' element={<PartidaMaestro />} />
         <Route path='/plantillaContable' element={<PlantillaContableMaestro/>} />

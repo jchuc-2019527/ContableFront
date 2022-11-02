@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./AdminHome.css";
 import NavbarProfile from "../navbarProfile/NavbarProfile";
+import { Button } from "@mui/material";
 
 const AdminHome = () => {
     
@@ -25,11 +26,15 @@ const AdminHome = () => {
         </p>
 
         <div class="btn-home">
-        <Link to={"/register"}>
-        <a className="btn">Ver Empresas Registradas</a>
+        <Link to={"/empresas"} style={{textDecoration: 'none'}} >
+          <Button variant="outlined" sx={{color: '#fff', border: 2.5}} >
+                  <a >Ver Empresas Registradas</a>
+          </Button>
       </Link>
-      <Link to={"/registerCompany"}>
-        <a className="btn">Registrar Empresa</a>
+      <Link to={"/registerCompany"} style={{textDecoration: 'none'}} >
+        <Button variant="outlined" sx={{color: '#fff', border: 2.5}} >
+        <a >Registrar Empresa</a>
+        </Button>
       </Link>
         </div>
     </header>

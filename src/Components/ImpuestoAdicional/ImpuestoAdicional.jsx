@@ -4,8 +4,14 @@ import { url } from "../axiosConnect";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import Navbar from "../navbar/Navbar";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Button } from "@mui/material";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const ImpuestoAdicional = () => {
+
+  const navigate = useNavigate();
   const [impuestos, setImpuestos] = useState([]);
   const [data, setData] = useState({
     nombreImpuesto: " ",
@@ -24,9 +30,9 @@ const ImpuestoAdicional = () => {
       .then((res) => {
         setImpuestos(res.data.result);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, [impuestos]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +61,13 @@ const ImpuestoAdicional = () => {
           toast: true,
         });
       });
+  };
+
+    const {idTaxe} = useParams();
+
+  const eliminar = (e) => {
+    Axios.delete(url + 'impuesto/deleteTaxe/' + idTaxe, headers)
+    navigate('/impuestoAdicional')
   };
 
   return (
@@ -127,20 +140,53 @@ const ImpuestoAdicional = () => {
                         >
                           <thead className="thead-light">
                             <tr>
+                              <th className="centrado">No.</th>
                               <th className="centrado">Nombre Impuesto</th>
                               <th className="centrado">Descripcion Impuesto</th>
                               <th className="centrado">Valor Impuesto</th>
+                              <th className="centrado">Opciones</th>
                             </tr>
                           </thead>
                           {impuestos.map((newImpuesto, index) => {
                             return (
-                              <tbody key={index} >
+                              <tbody key={index}>
                                 <tr>
-                                  <td className="centrado">{newImpuesto.nombreImpuesto}</td>
+                                  <td className="centrado">{index + 1}</td>
                                   <td className="centrado">
-                                 {newImpuesto.descripcionImpuesto}
+                                    {newImpuesto.nombreImpuesto}
                                   </td>
-                                  <td className="centrado">{newImpuesto.valorImpuesto}</td>
+                                  <td className="centrado">
+                                    {newImpuesto.descripcionImpuesto}
+                                  </td>
+                                  <td className="centrado">
+                                    {newImpuesto.valorImpuesto}
+                                  </td>
+                                  <td className="centrado">
+                                    {" "}
+                                    <Link
+                                      to={
+                                        "/impuestoAdicional/" +
+                                        newImpuesto.codigoValorImpuesto
+                                      }
+                                    >
+                                      <Button
+                                        onClick={eliminar}
+                                        sx={{ color: "red" }}
+                                      >
+                                        <DeleteRoundedIcon />
+                                      </Button>
+                                    </Link>
+                                    <Link
+                                      to={
+                                        "/impuestoAdicional/" +
+                                        newImpuesto.codigoValorImpuesto
+                                      }
+                                    >
+                                      <Button sx={{ color: "green" }}>
+                                        <ModeEditIcon />
+                                      </Button>{" "}
+                                    </Link>
+                                  </td>
                                 </tr>
                               </tbody>
                             );

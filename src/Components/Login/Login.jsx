@@ -73,6 +73,7 @@ const Login = () => {
                   placeholder="Username"
                   id="username"
                   name="username"
+                  required
                 />
                 <input
                   onChange={handleChange}
@@ -81,6 +82,7 @@ const Login = () => {
                   placeholder="Password"
                   id="claveUsuario"
                   name="claveUsuario"
+                  required
                 />
                 <button className="btn" >Login</button>
               </form>

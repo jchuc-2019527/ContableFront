@@ -4,8 +4,13 @@ import { url } from "../axiosConnect";
 import Axios from "axios";
 import Navbar from "../navbar/Navbar";
 import Swal from "sweetalert2";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { Button } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Entidad = () => {
+  const navigate = useNavigate();
   const [entidad, setEntidad] = useState({
     NITEntidad: "",
     nombreEntidad: "",
@@ -34,14 +39,13 @@ const Entidad = () => {
         e.target.reset();
       })
       .catch((err) => {
-         Swal.fire({
+        Swal.fire({
           position: "center",
           icon: "error",
           color: "white",
           background: "rgba(0,0,0,0.9)",
           title: err.response.data.message,
           timer: 3000,
-          imerProgressBar: true,
           toast: true,
           showCancelButton: false,
           showConfirmButton: false,
@@ -49,13 +53,27 @@ const Entidad = () => {
       });
   };
 
+  const { idEntity } = useParams();
+  
+  const eliminarEntidad = (e) => {
+    e.preventDefault();
+    Axios.delete(url + "entidad/deleteEntity/" + idEntity, headers)
+    .then((res) =>{
+      console.log('se elimino', res)
+      navigate('/entidad')
+    })
+    .catch((err) => {
+      console.log('no se elimino', err)
+    })
+
+  };
+
   useEffect(() => {
     Axios.get(url + "entidad/entities", headers)
       .then((res) => {
         setEntidades(res.data.resul);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, [entidades]);
 
   return (
@@ -67,7 +85,7 @@ const Entidad = () => {
         <div className="container my-3">
           <div className="row">
             <div className="col-sm-12 col-md-4 col-lg-4 col-xl-4 py-4">
-              <form onSubmit={registerEntidad} >
+              <form onSubmit={registerEntidad}>
                 <h2>Entidad</h2>
                 <div className="mb-3">
                   <label className="form-label">Nit Entidad</label>
@@ -92,9 +110,7 @@ const Entidad = () => {
                   />
                 </div>
                 <div className="d-grid gap-2">
-                  <button className="btn btn-success">
-                    Guardar
-                  </button>
+                  <button className="btn btn-success">Guardar</button>
                 </div>
               </form>
               <div className="btn-home"></div>
@@ -117,18 +133,42 @@ const Entidad = () => {
                     >
                       <thead className="thead-light">
                         <tr>
+                          <th className="centrado">No.</th>
                           <th className="centrado">Nit Entidad</th>
                           <th className="centrado">Nombre Empresa</th>
+                          <th className="centrado">Opciones</th>
                         </tr>
                       </thead>
                       {entidades.map((newEnti, index) => {
                         return (
-                          <tbody key={index} >
-                            <tr >
+                          <tbody key={index}>
+                            <tr>
+                              <td className="centrado">{index + 1}</td>
+                              <td className="centrado">{newEnti.NITEntidad}</td>
                               <td className="centrado">
-                                {newEnti.NITEntidad}
+                                {newEnti.nombreEntidad}
                               </td>
-                              <td className="centrado">{newEnti.nombreEntidad}</td>
+                              <td className="centrado">
+                                <Button
+                                  onClick={eliminarEntidad}
+                                  sx={{ color: "red", border: 1 }}
+                                >
+                                  <Link to={"/entidad/" + newEnti.codigoNIT}>
+                                    <DeleteRoundedIcon sx={{ color: "red" }} />
+                                  </Link>
+                                </Button>
+                                <Button
+                                  sx={{
+                                    color: "green",
+                                    border: 2,
+                                    marginLeft: 1,
+                                  }}
+                                >
+                                  <Link to={"/entidad/" + newEnti.codigoNIT}>
+                                    <ModeEditIcon sx={{ color: "green" }} />
+                                  </Link>
+                                </Button>
+                              </td>
                             </tr>
                           </tbody>
                         );

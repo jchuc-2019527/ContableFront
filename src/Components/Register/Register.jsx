@@ -7,6 +7,9 @@ import Modal from "@mui/material/Modal";
 import Axios from "axios";
 import { url } from "../axiosConnect";
 import Swal from "sweetalert2";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import AddIcon from "@mui/icons-material/Add";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 const style = {
   position: "absolute",
@@ -41,7 +44,6 @@ const Register = () => {
 
   const [empresas, setEmpresas] = useState([]);
   const { idEmpre } = useParams();
-
 
   const headers = {
     headers: {
@@ -87,55 +89,56 @@ const Register = () => {
   };
 
   const deleteEmpresa = (e) => {
-	    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-success",
-        cancelButton: "btn btn-danger",
-      },
-      buttonsStyling: false,
-    });
+    // const swalWithBootstrapButtons = Swal.mixin({
+    //   customClass: {
+    //     confirmButton: "btn btn-success",
+    //     cancelButton: "btn btn-danger",
+    //   },
+    //   buttonsStyling: false,
+    // });
 
-    swalWithBootstrapButtons
-      .fire({
-        title: "Esta seguro de eliminar su cuenta?",
-        text: "No podra revertir estos cambios!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, eliminar cuenta!",
-        cancelButtonText: "No, cancelar!",
-        reverseButtons: true,
+    // swalWithBootstrapButtons
+    //   .fire({
+    //     title: "Esta seguro de eliminar su cuenta?",
+    //     text: "No podra revertir estos cambios!",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonText: "Yes, eliminar cuenta!",
+    //     cancelButtonText: "No, cancelar!",
+    //     reverseButtons: true,
+    //   })
+    //   .then((result) => {
+    //     if (result.isConfirmed) {
+    //       Axios.delete(
+    //         url + "empresaMaestro/deleteEmpresa/" + idEmpre,
+    //         headers
+    //       );
+    //       navigate("/empresas");
+    //       swalWithBootstrapButtons.fire(
+    //         "Cuenta eliminada!",
+    //         "Su cuenta ha sido eliminada.",
+    //         "success"
+    //       );
+    //     } else if (
+    //       navigate("/empresas")
+    //       /* Read more about handling dismissals below */
+    //     ) {
+    //       swalWithBootstrapButtons.fire(
+    //         "Cancelado",
+    //         "Su cuenta no se ha eliminado",
+    //         "error"
+    //       );
+    //     }
+    //   });
+    Axios.delete(url + "empresaMaestro/deleteEmpresa/" + idEmpre, headers)
+      .then((res) => {
+        console.log("Se elimino la empresa", res);
+        navigate("/empresas");
       })
-      .then((result) => {
-        if (result.isConfirmed) {
-          Axios.delete(url + 'empresaMaestro/deleteEmpresa/' + idEmpre, headers)
-		  navigate('/empresas')
-          swalWithBootstrapButtons.fire(
-            "Cuenta eliminada!",
-            "Su cuenta ha sido eliminada.",
-            "success"
-          );
-        } else if (
-			navigate('/empresas')
-          /* Read more about handling dismissals below */
-         
-        ) {
-          swalWithBootstrapButtons.fire(
-            "Cancelado",
-            "Su cuenta no se ha eliminado",
-            "error"
-          );
-        }
+      .catch((err) => {
+        console.log("No se puedo eliminar", err);
       });
-	// Axios.delete(url + 'empresaMaestro/deleteEmpresa/' + idEmpre, headers)
-	// .then((res) => {
-	// 	console.log('Se elimino la empresa', res)
-	// 	navigate('/empresas')
-	// })
-	// .catch((err) => {
-	// 	console.log('No se puedo eliminar', err)
-	// }) 
-  }
-
+  };
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -150,32 +153,18 @@ const Register = () => {
             role="tablist"
           >
             <ul className="nav nav-tabs justify-content-end">
-              <li className="nav-item">
-                <Link to="/adminHome">
-                  <a
-                    className="nav-link active"
-                    id="list-tab"
-                    data-toggle="tab"
-                    role="tab"
-                    aria-controls="list"
-                    aria-selected="false"
-                  >
+              <li>
+                <Link style={{ textDecoration: "none" }} to="/adminHome">
+                  <Button sx={{ color: "wheat", border: 1, marginRight: 1 }}>
                     Regresar
-                  </a>
+                  </Button>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/registerCompany">
-                  <a
-                    className="nav-link active"
-                    id="list-tab"
-                    data-toggle="tab"
-                    role="tab"
-                    aria-controls="list"
-                    aria-selected="false"
-                  >
+              <li>
+                <Link style={{ textDecoration: "none" }} to="/registerCompany">
+                  <Button sx={{ color: "wheat", border: 1, marginRight: 1 }}>
                     Ingresar Nueva Empresa
-                  </a>
+                  </Button>
                 </Link>
               </li>
             </ul>
@@ -283,10 +272,18 @@ const Register = () => {
                                 <th>{index + 1}</th>
                                 <td>
                                   {" "}
-                                  <Link to={'/usuarios/' + empresas.codigoEmpresa}>
+                                  <Button variant="outlined" color="secondary">
                                     {" "}
-                                    <a>{empresas.nombreEmpresa}</a>
-                                  </Link>
+                                    <Link
+                                      style={{
+                                        textDecoration: "none",
+                                        color: "purple",
+                                      }}
+                                      to={"/usuarios/" + empresas.codigoEmpresa}
+                                    >
+                                      {empresas.nombreEmpresa}
+                                    </Link>
+                                  </Button>
                                 </td>
                                 <td>{empresas.nombreComercial}</td>
                                 <td>{empresas.direccionEmpresa}</td>
@@ -294,20 +291,33 @@ const Register = () => {
                                 <td>{empresas.porcentajeIVA}</td>
                                 <td>
                                   <Button onClick={handleOpen}>
-                                    <i className="fas fa-edit"></i>
-                                  </Button>{" "}
-                                  |{" "}
+                                    <Button sx={{ color: "blue", border: 2 }}>
+                                      {" "}
+                                      <ModeEditIcon />{" "}
+                                    </Button>
+                                  </Button>
                                   <Button onClick={deleteEmpresa}>
-									<Link to={'/empresas/' + empresas.codigoEmpresa} >  <i className="fas fa-user-times"></i></Link>
-                                  </Button>{" "}
-                                  |{" "}
+                                    <Link
+                                      to={"/empresas/" + empresas.codigoEmpresa}
+                                    >
+                                      <Button sx={{ color: "red", border: 2 }}>
+                                        {" "}
+                                        <DeleteRoundedIcon />{" "}
+                                      </Button>
+                                    </Link>
+                                  </Button>
                                   <Button onClick={handleOpen}>
                                     <Link
                                       to={"/empresas/" + empresas.codigoEmpresa}
                                     >
-                                      <i className="fas fa-user"></i>
+                                      <Button
+                                        sx={{ color: "green", border: 2 }}
+                                      >
+                                        {" "}
+                                        <AddIcon />{" "}
+                                      </Button>
                                     </Link>
-                                  </Button>{" "}|
+                                  </Button>
                                 </td>
                               </tr>
                             </tbody>

@@ -10,7 +10,7 @@ const Register = () => {
   const { idEmpresa, idUser } = useParams();
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-  console.log(typeof(idUser))
+  console.log(typeof idUser);
 
   const headers = {
     headers: {
@@ -28,7 +28,6 @@ const Register = () => {
   }, []);
 
   const handleDelete = (e) => {
-	
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",
@@ -50,15 +49,15 @@ const Register = () => {
       .then((result) => {
         if (result.isConfirmed) {
           Axios.delete(url + "user/deleteUser/" + idUser, headers);
-		  navigate('/usuarios/' + idEmpresa)
+          navigate("/usuarios/" + idEmpresa);
           swalWithBootstrapButtons.fire(
             "Cuenta eliminada!",
             "Su cuenta ha sido eliminada.",
             "success"
           );
         } else if (
-			navigate('/usuarios/' + idEmpresa)
-			// result.dismiss === Swal.DismissReason.cancel
+          navigate("/usuarios/" + idEmpresa)
+          // result.dismiss === Swal.DismissReason.cancel
           /* Read more about handling dismissals below */
         ) {
           swalWithBootstrapButtons.fire(
@@ -80,18 +79,11 @@ const Register = () => {
             role="tablist"
           >
             <ul className="nav nav-tabs justify-content-end">
-              <li className="nav-item">
-                <Link to="/empresas">
-                  <a
-                    className="nav-link active"
-                    id="list-tab"
-                    data-toggle="tab"
-                    role="tab"
-                    aria-controls="list"
-                    aria-selected="false"
-                  >
+              <li>
+                <Link to="/empresas" style={{ textDecoration: "none" }}>
+                  <Button sx={{ color: "wheat", border: 1, marginRight: 1 }}>
                     Regresar
-                  </a>
+                  </Button>
                 </Link>
               </li>
             </ul>
@@ -137,11 +129,18 @@ const Register = () => {
                                   </a>{" "}
                                   {"  "}|{"  "}{" "}
                                   <a>
-									<Button onClick={handleDelete} >
-										<Link to={"/usuarios/" + idEmpresa + '/' + users.codigoUsuario}>
-                                      <i className="fas fa-user-times"></i>
-                                    </Link>
-									</Button>
+                                    <Button onClick={handleDelete}>
+                                      <Link
+                                        to={
+                                          "/usuarios/" +
+                                          idEmpresa +
+                                          "/" +
+                                          users.codigoUsuario
+                                        }
+                                      >
+                                        <i className="fas fa-user-times"></i>
+                                      </Link>
+                                    </Button>
                                   </a>
                                   <a></a>
                                 </td>

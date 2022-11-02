@@ -17,7 +17,7 @@ function NavbarProfile() {
   return (
     <nav className="nav">
 
-        <Link to='/tareas' >
+        <Link to='/tareas' style={{textDecoration: 'none'}} >
           <Button onClick={logOut} color="secondary" variant="contained" >Cerrar Sesion</Button>
         </Link>
 
