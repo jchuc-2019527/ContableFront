@@ -54,18 +54,17 @@ const Entidad = () => {
   };
 
   const { idEntity } = useParams();
-  
+
   const eliminarEntidad = (e) => {
     e.preventDefault();
     Axios.delete(url + "entidad/deleteEntity/" + idEntity, headers)
-    .then((res) =>{
-      console.log('se elimino', res)
-      navigate('/entidad')
-    })
-    .catch((err) => {
-      console.log('no se elimino', err)
-    })
-
+      .then((res) => {
+        console.log("se elimino", res);
+        navigate("/entidad");
+      })
+      .catch((err) => {
+        console.log("no se elimino", err);
+      });
   };
 
   useEffect(() => {

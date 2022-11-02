@@ -4,9 +4,6 @@ import "./navbarProfile.css";
 import { Button } from "@mui/material";
 
 function NavbarProfile() {
-  const [active, setActive] = useState("nav__menu");
-  const [icon, setIcon] = useState("nav__toggler");
-
   const navigate = useNavigate()
     const logOut = (e)=>{
     e.preventDefault();
