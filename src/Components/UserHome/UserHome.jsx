@@ -25,7 +25,7 @@ const UserHome = () => {
           <div className="box-container">
             
             <div className="box">
-              <i className="fab fa-angular"></i>
+              <i class="fab fa-angular"></i>
               <h3>Activo Fijo</h3>
               <Link to={'/activoFijo'}  ><a  className="btn">
                 Click Para ir

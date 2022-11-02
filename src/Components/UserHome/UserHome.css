@@ -4,7 +4,15 @@
     text-align: center;
     font-family: sans-serif;
 }
-
+.icon{
+    background-color: #fff;
+    width: 2rem;
+    height: 3rem;
+    text-align: center;
+    align-items: center;
+    margin-left: 8rem;
+    margin-top: 0.5rem;
+}
 
 .head {
     display: flex;

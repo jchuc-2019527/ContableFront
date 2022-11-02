@@ -29,6 +29,11 @@ a {
   text-transform: uppercase;
   color: #ffffff;
 }
+.HOLA {
+  cursor: pointer;
+  color: #ffffff;
+}
+
 
 .nav__menu {
   display: flex;

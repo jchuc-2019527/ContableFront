@@ -6,6 +6,7 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import login from "../../Shared/img/login.svg";
 import './Login.css'
+import { Button } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ const Login = () => {
           background: "rgba(0,0,0,0.9)",
           title: "Login succesfully",
           timer: 3000,
-          imerProgressBar: true,
           toast: true,
           showCancelButton: false,
           showConfirmButton: false,
@@ -50,7 +50,6 @@ const Login = () => {
           background: "rgba(0,0,0,0.9)",
           title: "Contraseña o username incorrectos",
           timer: 3000,
-          timerProgressBar: true,
           toast: true,
           showCancelButton: false,
           showConfirmButton: false,
@@ -83,7 +82,7 @@ const Login = () => {
                   id="claveUsuario"
                   name="claveUsuario"
                 />
-                <button className="btn">login</button>
+                <button className="btn" >Login</button>
               </form>
             </div>
             <img className="image-container" src={login} alt="login.svg" />
